@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="test1()">Promise1 Test</button>
+    <button onclick="test2()">Promise2 Test</button>
+    <button onclick="test3()">Promise3 Test</button>
+    <button onclick="test4()">Promise4 Test</button>
+    <script>
+        function test1() {
+            console.log("test1 start");
+            setTimeout(() => {  // Task Queue 등록
+                console.log("통신 요청 start")
+                console.log("통신 요청 end")
+            }, 2000);
+            console.log("test1 end");
+        }
+
+        function test2() {
+            let data;
+            console.log("test2 start");
+            setTimeout(() => {  // Task Queue 등록
+                console.log("통신 완료");
+                data = 200;
+            }, 2000);
+            console.log("test2 end");
+            console.log("값 : " + data);
+        }
+
+        function test3() {
+            console.log("test3 start");
+            // resolve 완료해서 결과를 반환한 상태
+            // reject 거절
+            let response = new Promise((resolve, reject) => {
+                setTimeout(() => {  // Task Queue 등록
+                    console.log("통신 완료");
+                    let data = 10;
+                    resolve(data);
+                }, 2000);
+            });
+            console.log("값 : " + response);
+            console.log("test3 end");
+        }
+
+        async function test4() {
+            console.log("test4 start");
+            // resolve 완료해서 결과를 반환한 상태
+            // reject 거절
+            // await 는 컴파일 시점에 확인됨
+            // await 가 있으면 function 앞에 async 예약어를 지정해줘야함
+            let response = await new Promise((resolve, reject) => {
+                setTimeout(() => {  // Task Queue 등록
+                    console.log("통신 완료");
+                    let data = 10;
+                    resolve(data);
+                }, 2000);
+            });
+            console.log("값 : " + response);
+            console.log("test4 end");
+        }
+    </script>
+</body>
+</html>

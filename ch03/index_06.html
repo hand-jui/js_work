@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+</head>
+<style>
+    .check.checked {
+        text-decoration: line-through;
+    }
+
+    #btn {
+        margin-bottom: 10px;
+    }
+</style>
+<body>
+    <script>
+        $(document).ready(function () {
+            $("#btn").on('click', () => {
+                $.ajax({
+                    type: "get",
+                    url: "https://jsonplaceholder.typicode.com/todos",
+                    contentType: "application/json; charset=utf-8;",
+                    dataType: "json"
+                }).done((data, textStatus, xhr) => {
+                    let todo = xhr.responseJSON;
+                    // console.log(todo[0].title);
+                    for (let i = 0; i < 10; i++) {
+                        $(".result").append(`<div class="todoList"><input type="checkbox" class="check" onclick="lineToggle(${todo[i].id})">
+                            <span class="check" id="span--${todo[i].id}">${todo[i].title}</span></div>`);
+                    }
+                    // console.log(todo);
+                }).fail((error) => {
+                    console.log("error : " + error);
+                });
+            });
+        });
+
+        function lineToggle(id) {
+            let successLine = document.querySelector("#span--" + id);
+            // console.log(successLine);
+            // console.log(successLine.classList);
+            successLine.classList.toggle('checked');
+
+        }
+    </script>
+    <h1>To-Do List</h1>
+    <button id="btn">todo 가져오기</button>
+    <div class="result"></div>
+</body>
+</html>
